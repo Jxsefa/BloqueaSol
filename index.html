@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>BloqueaSol Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+
+<div id="login" class="login-container">
+  <h1>BLOQUEASOL</h1>
+  <div class="login-box">
+    <h2>LOGIN</h2>
+    <input type="text" id="username" placeholder="Usuario" />
+    <input type="password" id="password" placeholder="Contraseña" />
+    <button onclick="login()">Login</button>
+    <p id="loginError" class="login-error"></p>
+  </div>
+</div>
+
+
+<div id="dashboard" class="dashboard-container" style="display: none;">
+
+
+  <div class="header">
+    <div class="logo-circle"></div>
+    <div class="logo-text">BloqueaSol</div>
+  </div>
+
+
+  <h1 class="titulo-principal">BLOQUEASOL</h1>
+
+
+  <div class="top-row">
+    <div class="box-top">
+      <div class="box-top-title">Dispositivo Id:</div>
+      <div class="box-top-value" id="dispositivo-id">--</div>
+    </div>
+    <div class="box-top">
+      <div class="box-top-title">Bloqueador Restante</div>
+      <div class="box-top-value bloqueador-value" id="bloqueador">--%</div>
+    </div>
+  </div>
+
+
+  <div id="alerta" class="alert d-none">
+    ¡Advertencia! El bloqueador solar se está agotando.
+  </div>
+
+  <div class="bloques-container">
+    <div class="bloque bloque-usos">
+      <div class="valor" id="usos">--</div>
+      <div class="titulo">Usos de Hoy</div>
+    </div>
+    <div class="bloque bloque-uv">
+      <div class="valor" id="uv">--</div>
+      <div class="titulo">Promedio de UV</div>
+    </div>
+    <div class="bloque bloque-piel">
+      <div class="valor" id="piel">--</div>
+      <div class="titulo">Tipo de piel más común</div>
+    </div>
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
