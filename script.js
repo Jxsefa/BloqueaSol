@@ -1,34 +1,3 @@
-document.getElementById("usos").textContent = "12";
-document.getElementById("uv").textContent = "7.3";
-document.getElementById("piel").textContent = "Tipo III";
-document.getElementById("bloqueador").textContent = "68%";
-
-// Mostrar alerta si bloqueador es bajo
-if (parseInt("68") < 20) {
-  document.getElementById("alerta").classList.remove("d-none");
-}
-
-// Gráfico de bloqueador restante
-const ctx = document.getElementById('graficaPiel').getContext('2d');
-new Chart(ctx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Disponible', 'Consumido'],
-    datasets: [{
-      label: 'Bloqueador',
-      data: [68, 32],
-      backgroundColor: ['#f1c40f', '#e0e0e0'],
-      borderWidth: 1
-    }]
-  },
-  options: {
-    plugins: {
-      legend: {
-        position: 'bottom'
-      }
-    }
-  }
-});
 async function login() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
@@ -48,23 +17,22 @@ async function login() {
     const data = await response.json();
     localStorage.setItem('token', data.token);
 
-    // Mostrar dashboard y ocultar login
     document.getElementById('login').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
 
-    // Cargar datos iniciales
     actualizarDashboard();
     setInterval(actualizarDashboard, 5000);
-
   } else {
     document.getElementById('loginError').textContent = 'Usuario o contraseña incorrectos.';
   }
 }
 
+let chart; // global para actualizarla
+
 async function actualizarDashboard() {
   const token = localStorage.getItem('token');
 
-  const response = await fetch('http://localhost:3000/api/v1/mediciones/last', {
+  const response = await fetch('http://localhost:3000/api/v1/mediciones/', {
     headers: {
       'Authorization': 'Bearer ' + token
     }
@@ -79,16 +47,44 @@ async function actualizarDashboard() {
     document.getElementById("bloqueador").textContent = data.bloqueador_restante + "%";
     document.getElementById("dispositivo-id").textContent = data.dispositivo_id;
 
-
-    // Opcional: alerta si bloqueador < 20%
+    // Alerta por bloqueador bajo
     if (data.bloqueador_restante < 20) {
       document.getElementById('alerta').classList.remove('d-none');
     } else {
       document.getElementById('alerta').classList.add('d-none');
     }
 
+    // Gráfico
+    const restante = data.bloqueador_restante;
+    const usado = 100 - restante;
+
+    if (!chart) {
+      const ctx = document.getElementById('graficaPiel').getContext('2d');
+      chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Disponible', 'Consumido'],
+          datasets: [{
+            label: 'Bloqueador',
+            data: [restante, usado],
+            backgroundColor: ['#f1c40f', '#e0e0e0'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }
+      });
+    } else {
+      chart.data.datasets[0].data = [restante, usado];
+      chart.update();
+    }
+
   } else {
     console.error('Error al obtener datos del dashboard');
   }
 }
-

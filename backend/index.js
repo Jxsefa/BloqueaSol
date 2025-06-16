@@ -48,7 +48,7 @@ app.post('/medicion', async (req, res) => {
 });
 
 // GET última medición
-app.get('/api/v1/mediciones/last', authMiddleware, async (req, res) => {
+app.get('/api/v1/mediciones/', authMiddleware, async (req, res) => {
     const result = await pool.query(`
         SELECT * FROM mediciones ORDER BY timestamp DESC LIMIT 1
     `);
