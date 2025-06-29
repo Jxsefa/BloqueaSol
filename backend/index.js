@@ -25,7 +25,7 @@ const authMiddleware = (req, res, next) => {
 };
 
 // Login
-app.post('/login', async (req, res) => {
+app.post('/loginn', async (req, res) => {
     const { username, password } = req.body;
     const result = await pool.query('SELECT * FROM usuarios WHERE username = $1', [username]);
     const user = result.rows[0];
@@ -48,12 +48,36 @@ app.post('/medicion', async (req, res) => {
 });
 
 // GET última medición
-app.get('/api/v1/mediciones/', authMiddleware, async (req, res) => {
+app.get('/api/v1/mediciones', authMiddleware, async (req, res) => {
     const result = await pool.query(`
         SELECT * FROM mediciones ORDER BY timestamp DESC LIMIT 1
     `);
     res.json(result.rows[0]);
 });
+
+app.get('/api/v1/last-medicion/:id', async (req, res) => {
+    console.log('ID param:', req.params.id);
+
+    const { id } = req.params;
+
+    const result = await pool.query(
+        `
+            SELECT AVG(promedio_uv) as avg
+            FROM (
+                SELECT promedio_uv
+                FROM mediciones
+                WHERE dispositivo_id = $1
+                ORDER BY timestamp DESC
+                LIMIT 5
+                ) AS ultimas_5;
+        `,
+        [id]
+    );
+
+    res.json(result.rows[0]);
+});
+
+
 
 // GET dispositivos (opcional)
 app.get('/api/v1/dispositivos', authMiddleware, async (req, res) => {
