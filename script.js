@@ -2,7 +2,7 @@ async function login() {
   const username = document.getElementById('username').value;
   const password = document.getElementById('password').value;
 
-  const response = await fetch('http://localhost:3000/login', {
+  const response = await fetch('https://bloqueasol.onrender.com/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -32,7 +32,7 @@ let chart; // global para actualizarla
 async function actualizarDashboard() {
   const token = localStorage.getItem('token');
 
-  const response = await fetch('http://localhost:3000/api/v1/mediciones/', {
+  const response = await fetch('https://bloqueasol.onrender.com/api/v1/mediciones/', {
     headers: {
       'Authorization': 'Bearer ' + token
     }
