@@ -25,7 +25,7 @@ const authMiddleware = (req, res, next) => {
 };
 
 // Login
-app.post('/loginn', async (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
     const result = await pool.query('SELECT * FROM usuarios WHERE username = $1', [username]);
     const user = result.rows[0];
