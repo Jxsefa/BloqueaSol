@@ -19,16 +19,16 @@ docker images
 Cuando ya tengas tu imagen creada se debe de ejecutar este comando para ejecutar el contenedor
 
 ```bash
-docker run -p 3000:3000 bloquea-sol:0.1
+docker run -p 10000:10000 bloquea-sol:0.1
 ```
 
-esto ejecuta la aplicacion en el puerto 3000 de tu localhost 
+esto ejecuta la aplicacion en el puerto 10000 de tu localhost 
 
 
 ## endpoints
 
-POST http://localhost:3000/login
+POST http://localhost:10000/login
 
-POST http://localhost:3000/medicion
+POST http://localhost:10000/medicion
 
-get GET http://localhost:3000/api/v1/mediciones/last
+get GET http://localhost:10000/api/v1/mediciones/last
