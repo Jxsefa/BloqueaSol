@@ -32,3 +32,14 @@ POST http://localhost:10000/login
 POST http://localhost:10000/medicion
 
 get GET http://localhost:10000/api/v1/mediciones/last
+
+### urls remotas
+
+https://bloqueasol.onrender.com --> api
+
+https://bloqueasol-2.onrender.com/index.html --> pagina web 
+
+
+https://dashboard.render.com/static/srv-d1gsd3ngi27c73c2rqvg/deploys/dep-d1gsd3vgi27c73c2rr70
+
+---> pagina de administracion de pagina
